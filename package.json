@@ -1,0 +1,44 @@
+{
+  "name": "cloudflare-worker-typscript-boilerplate",
+  "version": "1.0.0",
+  "description": "Serverless boilerplate for cloudflare workers",
+  "scripts": {
+    "deploy": "serverless deploy"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@cloudflare/workers-types": "^1.0.6",
+    "@types/node": "^13.7.1",
+    "@typescript-eslint/eslint-plugin": "^2.19.2",
+    "@typescript-eslint/parser": "^2.19.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "fork-ts-checker-webpack-plugin": "^4.0.3",
+    "husky": "^4.2.1",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "serverless": "^1.63.0",
+    "serverless-cloudflare-workers": "^1.2.0",
+    "serverless-dotenv-plugin": "^2.3.2",
+    "serverless-webpack": "^5.2.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.2.4",
+    "webpack": "^4.41.6",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "author": "Auston Pramodh Barboza",
+  "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc --noEmit && lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "git add"
+    ]
+  }
+}

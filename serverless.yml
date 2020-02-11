@@ -1,0 +1,25 @@
+service:
+  name: cloudflare-worker-typescript
+  webpackConfig: ./webpack.config.js
+  
+
+provider:
+  name: cloudflare
+  config:
+    accountId: ${env:CLOUDFLARE_ACCOUNT_ID}
+    zoneId: ${env:CLOUDFLARE_ZONE_ID}
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-cloudflare-workers
+
+functions:
+  notify:
+    name: notify
+    script: bundle # there must be a file called helloWorld.js
+    events:
+      - http:
+          url: ${env:CLOUDFLARE_SUB_DOMAIN}/notify
+          method: GET
+  
