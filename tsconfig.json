@@ -10,8 +10,9 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "target": "es2017",
-    "outDir": "lib",
-    "esModuleInterop": true
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "noEmit": true
   },
   "include": [
     "./src/*.ts",

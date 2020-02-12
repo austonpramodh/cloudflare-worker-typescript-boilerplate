@@ -1,15 +1,24 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
-// const slsw = require("serverless-webpack");
-// const nodeExternals = require("webpack-node-externals");
+const webpack = require("webpack");
+const dotenv = require("dotenv");
+
+const parseENV = () => {
+    const loadedEnv = dotenv.config().parsed;
+    const env = {};
+    Object.keys(loadedEnv).forEach((eachEnvKey) => {
+        env[eachEnvKey] = JSON.stringify(loadedEnv[eachEnvKey]);
+    });
+    return env;
+};
+
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-console.log(process.env.NODE_ENV);
 module.exports = {
     target: "webworker",
     mode: process.env.NODE_ENV || "development",
     entry: { bundle: path.join(__dirname, "./src/index.ts") },
-    devtool: process.env.NODE_ENV != "production" ? "cheap-module-source-map" : null,
+    devtool: process.env.NODE_ENV != "production" ? "cheap-module-source-map" : false,
     resolve: {
         extensions: [".mjs", ".json", ".ts"],
         symlinks: false,
@@ -19,7 +28,6 @@ module.exports = {
         filename: "bundle.js",
         path: path.join(__dirname, "dist"),
     },
-    // externals: [nodeExternals()],
     module: {
         rules: [
             // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
@@ -30,7 +38,7 @@ module.exports = {
                     [
                         path.resolve(__dirname, "node_modules"),
                         path.resolve(__dirname, ".serverless"),
-                        path.resolve(__dirname, ".webpack"),
+                        path.resolve(__dirname, "dist"),
                     ],
                 ],
                 options: {
@@ -41,10 +49,11 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.DefinePlugin({ "process.env": parseENV() }),
         new ForkTsCheckerWebpackPlugin({
             eslint: true,
             eslintOptions: {
-                cache: true,
+                cache: false,
             },
         }),
     ],

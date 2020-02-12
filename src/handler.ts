@@ -1,3 +1,8 @@
 export async function handleRequest(request: Request): Promise<Response> {
-    return new Response(`request method: ${request.method}`);
+    const init = {
+        headers: {
+            "content-type": "application/json;charset=UTF-8",
+        },
+    };
+    return new Response(JSON.stringify({ requestMethod: request.method }), init);
 }

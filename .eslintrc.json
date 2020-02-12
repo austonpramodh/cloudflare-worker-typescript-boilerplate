@@ -5,8 +5,8 @@
         "plugin:prettier/recommended"
     ],
     "env": {
-        "node": true,
-        "es6": true
+        "es6": true,
+        "worker": true
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
